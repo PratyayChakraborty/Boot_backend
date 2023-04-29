@@ -3,6 +3,7 @@ const cors = require("cors");
 const { connection } = require("./configs/db");
 const { UserRouter } = require("./Routes/User.routes");
 const { ServicesRoutes } = require("./Routes/Services.Routes");
+const { DiscountRoutes } = require("./Routes/Discount.Routes");
 
 
 require("dotenv").config();
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/user",UserRouter);
 app.use("/services",ServicesRoutes)
+app.use("/discount",DiscountRoutes)
 
 app.listen(process.env.port, async () => {
   try {
