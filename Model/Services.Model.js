@@ -13,13 +13,11 @@ const ServicesSchema = new mongoose.Schema({
    likes:{ type: Number, required: true},
    likesPrices:{ type: Number, required: true},
    averageTime:{ type: Number, required: true},
-   description:[{
-    startTime:{ type: String, required: true},
+   startTime:{ type: String, required: true},
     speed:{ type: String, required: true},
     refill:{ type: String, required: true},
     quality:{ type: String, required: true},
     props:{ type: String, required: true},
-   }],
    Instructions:[{ type: String, required: true},]
 }],
   

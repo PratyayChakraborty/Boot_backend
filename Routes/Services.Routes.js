@@ -18,8 +18,9 @@ ServicesRoutes.get("/", async (req, res) => {
 });
 ServicesRoutes.get("/:id", async (req, res) => {
   const payload = req.body;
+  console.log(req.params.id);
   try {
-    const product = await servicesModel.find({_id:req.params.id});
+    const product = await servicesModel.findById({ _id: req.params.id });
     console.log(product);
     res.send({ data: product });
   } catch (error) {
@@ -31,32 +32,47 @@ ServicesRoutes.get("/:id", async (req, res) => {
   }
 });
 
+ServicesRoutes.get("/alltypes/:id", async (req, res) => {
+  const payload = req.body;
+  const Id=req.headers.Id;
+  console.log(req.params.id);
+  try {
+    const product = await servicesModel.findById({ _id: req.params.id });
+    product.alltypes.map((el) => {
+      
+        console.log(el)
+      
+    });
+    // res.send({ data: val });
+  } catch (error) {
+    console.log(error, error);
+    res.status(500).send({
+      error: true,
+      msg: "something went wrong",
+    });
+  }
+});
+
 ServicesRoutes.post("/add", async (req, res) => {
   const payload = req.body;
- 
 
-    let payload1 = {
-      "subservices": payload.alltypes[0].subservices,
-      "days":payload.alltypes[0].days,
-      "minPrice":payload.alltypes[0].minPrice,
-      "maxPrices":payload.alltypes[0].maxPrices,
-      "minorder":payload.alltypes[0].minorder,
-      "maxorder":payload.alltypes[0].maxorder,
-      "likes":payload.alltypes[0].likes,
-      "likesPrices":payload.alltypes[0].likesPrices,
-      "averageTime":payload.alltypes[0].averageTime,
-      "description":
-      [{
-       "startTime":payload.alltypes[0].description[0].startTime,
-       "speed":payload.alltypes[0].description[0].speed,
-       "refill":payload.alltypes[0].description[0].refill,
-       "quality":payload.alltypes[0].description[0].quality,
-       "props":payload.alltypes[0].description[0].props
-      }],
-       "Instructions":payload.alltypes[0].Instructions
-   };
-   
-  
+  let payload1 = {
+    subservices: payload.alltypes[0].subservices,
+    days: payload.alltypes[0].days,
+    minPrice: payload.alltypes[0].minPrice,
+    maxPrices: payload.alltypes[0].maxPrices,
+    minorder: payload.alltypes[0].minorder,
+    maxorder: payload.alltypes[0].maxorder,
+    likes: payload.alltypes[0].likes,
+    likesPrices: payload.alltypes[0].likesPrices,
+    averageTime: payload.alltypes[0].averageTime,
+        startTime: payload.alltypes[0].startTime,
+        speed: payload.alltypes[0].speed,
+        refill: payload.alltypes[0].refill,
+        quality: payload.alltypes[0].quality,
+        props: payload.alltypes[0].props,
+    Instructions: payload.alltypes[0].Instructions,
+  };
 
   try {
     const data = await servicesModel.findOne({ services: payload.services });
@@ -66,9 +82,9 @@ ServicesRoutes.post("/add", async (req, res) => {
       res.send({ msg: "Data is Added " });
     } else {
       data.alltypes.push(payload1);
-      await data.save()
+      await data.save();
       // do something with the updated data, such as saving it to a database
-      res.send('Data added successfully');
+      res.send("Data added successfully");
     }
   } catch (error) {
     res.status(400).send({ msg: "something went wrong", error });
