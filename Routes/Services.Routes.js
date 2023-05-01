@@ -7,7 +7,7 @@ ServicesRoutes.get("/", async (req, res) => {
   try {
     const product = await servicesModel.find();
     console.log(product);
-    res.send({ data: product });
+    res.send({ data: product, total: product.length });
   } catch (error) {
     console.log(error, error);
     res.status(500).send({
@@ -34,17 +34,14 @@ ServicesRoutes.get("/:id", async (req, res) => {
 
 ServicesRoutes.get("/alltypes/:id", async (req, res) => {
   const payload = req.body;
-  const Id=req.headers.Id;
+  const Id = req.headers.Id;
   console.log(req.params.id);
   try {
     const product = await servicesModel.findById({ _id: req.params.id });
     product.alltypes.map((el) => {
-      if(el._id=="644cfd4ed7b791b631a73b0b"){
-
-        console.log(el)
+      if (el._id == "644cfd4ed7b791b631a73b0b") {
+        console.log(el);
       }
-      
-      
     });
     // res.send({ data: val });
   } catch (error) {
@@ -69,11 +66,11 @@ ServicesRoutes.post("/add", async (req, res) => {
     likes: payload.alltypes[0].likes,
     likesPrices: payload.alltypes[0].likesPrices,
     averageTime: payload.alltypes[0].averageTime,
-        startTime: payload.alltypes[0].startTime,
-        speed: payload.alltypes[0].speed,
-        refill: payload.alltypes[0].refill,
-        quality: payload.alltypes[0].quality,
-        props: payload.alltypes[0].props,
+    startTime: payload.alltypes[0].startTime,
+    speed: payload.alltypes[0].speed,
+    refill: payload.alltypes[0].refill,
+    quality: payload.alltypes[0].quality,
+    props: payload.alltypes[0].props,
     Instructions: payload.alltypes[0].Instructions,
   };
 
