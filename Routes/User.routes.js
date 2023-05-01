@@ -105,7 +105,7 @@ UserRouter.get("/", async (req, res) => {
 
   try {
     const product = await UserModel.find();
-    res.send({ data: product });
+    res.send({ data: product,total:product.length });
   } catch (error) {
     console.log("error", error);
     res.status(500).send({
