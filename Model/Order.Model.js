@@ -5,7 +5,7 @@ const OrderSchema = new mongoose.Schema({
   category: { type: String, required: true },
   services: { type: String, required: true },
   link: { type: String, required: true },
-  quantity: { type: nymber, required: true },
+  quantity: { type: Number, required: true },
   averageTime: { type: String, required: true },
   costval: { type: String, required: true },
 //   userId: {
