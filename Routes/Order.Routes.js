@@ -22,12 +22,12 @@ orderRouter.get('/:id', getOrder, (req, res) => {
 orderRouter.post('/', async (req, res) => {
   const order = new OrderModel({
     category: req.body.category,
-    service: req.body.service,
+    services: req.body.services,
     link: req.body.link,
     quantity: req.body.quantity,
     averageTime: req.body.averageTime,
-    charge: req.body.charge,
-    userId: req.body.userId,
+    costval: req.body.costval,
+    // userId: req.body.userId,
   });
 
   try {
