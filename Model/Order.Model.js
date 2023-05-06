@@ -8,10 +8,11 @@ const OrderSchema = new mongoose.Schema({
   quantity: { type: Number, required: true },
   averageTime: { type: String, required: true },
   costval: { type: String, required: true },
-//   userId: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "user",
-//   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
+
 });
 
 const OrderModel = mongoose.model("order", OrderSchema);
