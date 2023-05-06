@@ -5,6 +5,7 @@ const { UserRouter } = require("./Routes/User.routes");
 const { ServicesRoutes } = require("./Routes/Services.Routes");
 const { DiscountRoutes } = require("./Routes/Discount.Routes");
 const orderRouter = require("./Routes/Order.Routes");
+const router = require("./Routes/Tickets.Routes");
 
 
 require("dotenv").config();
@@ -27,6 +28,7 @@ app.use("/user",UserRouter);
 app.use("/services",ServicesRoutes)
 app.use("/discount",DiscountRoutes)
 app.use("/order",orderRouter)
+app.use("/ticket",router)
 
 app.listen(process.env.port, async () => {
   try {
