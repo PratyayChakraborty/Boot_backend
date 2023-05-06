@@ -1,10 +1,11 @@
-const express = require('express');
-const { OrderModel } = require('../Model/Order.Model');
+const express = require("express");
+const { OrderModel } = require("../Model/Order.Model");
+const { authenticate } = require("../middleware/authentication.middleware");
 const orderRouter = express.Router();
-
+const jwt = require("jsonwebtoken");
 
 // Get all orders
-orderRouter.get('/', async (req, res) => {
+orderRouter.get("/", async (req, res) => {
   try {
     const orders = await OrderModel.find();
     res.json(orders);
@@ -14,12 +15,13 @@ orderRouter.get('/', async (req, res) => {
 });
 
 // Get a single order
-orderRouter.get('/:id', getOrder, (req, res) => {
+orderRouter.get("/:id", getOrder, (req, res) => {
   res.json(res.order);
 });
 
 // Create a new order
-orderRouter.post('/', async (req, res) => {
+orderRouter.post("/", authenticate, async (req, res) => {
+    
   const order = new OrderModel({
     category: req.body.category,
     services: req.body.services,
@@ -27,7 +29,7 @@ orderRouter.post('/', async (req, res) => {
     quantity: req.body.quantity,
     averageTime: req.body.averageTime,
     costval: req.body.costval,
-    // userId: req.body.userId,
+    userId: req.body.userId,
   });
 
   try {
@@ -39,7 +41,7 @@ orderRouter.post('/', async (req, res) => {
 });
 
 // Update an existing order
-orderRouter.patch('/:id', getOrder, async (req, res) => {
+orderRouter.patch("/:id", getOrder, async (req, res) => {
   if (req.body.category != null) {
     res.order.category = req.body.category;
   }
@@ -70,10 +72,10 @@ orderRouter.patch('/:id', getOrder, async (req, res) => {
 });
 
 // Delete an order
-orderRouter.delete('/:id', getOrder, async (req, res) => {
+orderRouter.delete("/:id", getOrder, async (req, res) => {
   try {
     await res.order.remove();
-    res.json({ message: 'Order deleted' });
+    res.json({ message: "Order deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -85,7 +87,7 @@ async function getOrder(req, res, next) {
   try {
     order = await OrderModel.findById(req.params.id);
     if (order == null) {
-      return res.status(404).json({ message: 'Order not found' });
+      return res.status(404).json({ message: "Order not found" });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
