@@ -20,7 +20,7 @@ orderRouter.get("/:id", getOrder, (req, res) => {
 });
 
 // Create a new order
-orderRouter.post("/", authenticate, async (req, res) => {
+orderRouter.post("/", async (req, res) => {
     
   const order = new OrderModel({
     category: req.body.category,
