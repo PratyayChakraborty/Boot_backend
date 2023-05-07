@@ -12,17 +12,15 @@ const UserRouter = express.Router();
 
 UserRouter.post("/register", async (req, res) => {
   const payload = req.body;
-  console.log(payload)
+  console.log(payload);
 
   try {
     const email = await UserModel.findOne({ email: payload.email });
     if (email) {
-      res
-        .status(200)
-        .send({
-          msg: "Email is already Present Please try to again Email",
-          error: true,
-        });
+      res.status(200).send({
+        msg: "Email is already Present Please try to again Email",
+        error: true,
+      });
     } else {
       bcrypt.hash(payload.password, saltRounds, async (err, hash) => {
         if (err) {
@@ -34,8 +32,8 @@ UserRouter.post("/register", async (req, res) => {
           res.status(200).send({
             msg: "Registration success",
             username: user.name,
-            email:user.email,
-            phone:user.phone,
+            email: user.email,
+            phone: user.phone,
             error: false,
           });
         }
@@ -71,14 +69,13 @@ UserRouter.post("/login", async (req, res) => {
                 if (err) {
                   throw err;
                 } else {
-                  
                   res.status(200).send({
                     msg: "logged in success",
                     token,
                     username: user.name,
                     userId: user._id,
                     Email: user.email,
-                    phonne:user.phone,
+                    phonne: user.phone,
                     error: false,
                   });
                 }
@@ -101,11 +98,9 @@ UserRouter.post("/login", async (req, res) => {
 });
 
 UserRouter.get("/", async (req, res) => {
-
-
   try {
     const product = await UserModel.find();
-    res.send({ data: product,total:product.length });
+    res.send({ data: product, total: product.length });
   } catch (error) {
     console.log("error", error);
     res.status(500).send({
@@ -115,14 +110,34 @@ UserRouter.get("/", async (req, res) => {
   }
 });
 
-UserRouter.patch("/update/:id",authenticate, async (req, res) => {
-const Id=req.params.id;
-const payload=req.body
+UserRouter.patch("/update/:id", authenticate, async (req, res) => {
+  const Id = req.params.id;
+  const payload = req.body;
 
   try {
-  await UserModel.findByIdAndUpdate({_id:Id},payload)
+    await UserModel.findByIdAndUpdate({ _id: Id }, payload);
     res.status(200).send({
-      msg: "Profile Updated",payload
+      msg: "Profile Updated",
+      payload,
+    });
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).send({
+      error: true,
+      msg: "something went wrong",
+    });
+  }
+});
+
+UserRouter.patch("/delete/:id", async (req, res) => {
+  const Id = req.params.id;
+  const payload = req.body;
+
+  try {
+    await UserModel.findByIdAndDelete({ _id: Id }, payload);
+    res.status(200).send({
+      msg: "Profile Deleted",
+      payload,
     });
   } catch (error) {
     console.log("error", error);
