@@ -136,8 +136,7 @@ UserRouter.delete("/delete/:id", async (req, res) => {
   try {
     await UserModel.findByIdAndDelete({ _id: Id });
     res.status(200).send({
-      msg: "Profile Deleted",
-      payload,
+      msg: "Profile Deleted"
     });
   } catch (error) {
     console.log("error", error);
