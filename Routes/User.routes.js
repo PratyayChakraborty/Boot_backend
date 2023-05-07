@@ -110,7 +110,7 @@ UserRouter.get("/", async (req, res) => {
   }
 });
 
-UserRouter.patch("/update/:id", authenticate, async (req, res) => {
+UserRouter.patch("/update/:id", async (req, res) => {
   const Id = req.params.id;
   const payload = req.body;
 
