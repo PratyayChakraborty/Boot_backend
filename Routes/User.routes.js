@@ -129,7 +129,7 @@ UserRouter.patch("/update/:id", authenticate, async (req, res) => {
   }
 });
 
-UserRouter.patch("/delete/:id", async (req, res) => {
+UserRouter.delete("/delete/:id", async (req, res) => {
   const Id = req.params.id;
   const payload = req.body;
 
