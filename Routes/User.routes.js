@@ -111,6 +111,19 @@ UserRouter.get("/", async (req, res) => {
   }
 });
 
+UserRouter.get("/userdata/:id", async (req, res) => {
+  try {
+    const product = await UserModel.findById({_id:req.params.id});
+    res.send({ data: product, total: product.length });
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).send({
+      error: true,
+      msg: "something went wrong",
+    });
+  }
+});
+
 UserRouter.patch("/update/:id", async (req, res) => {
   const Id = req.params.id;
   const payload = req.body;
